@@ -6,6 +6,7 @@ ARG VER=7.1.9
 ENV PYTHONUNBUFFERED=1
 
 COPY custom/requirements.txt /tmp/requirements.txt
+COPY custom/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN addgroup -S ${USER} \
     && adduser -u ${UID} -S ${USER} -G ${GROUP}
@@ -15,11 +16,12 @@ RUN apk add --update --no-cache python3 git \
     && python3 -m ensurepip \
     && pip3 install --no-cache --upgrade pip setuptools \
     && python3 -m pip install --no-cache -r /tmp/requirements.txt \
-    && python3 -m pip install --no-cache sopel==${VER}
+    && python3 -m pip install --no-cache sopel==${VER} \ 
+    && chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /home/${USER}/
 USER ${USER}
 
 RUN mkdir .sopel
 
-ENTRYPOINT ["sopel"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

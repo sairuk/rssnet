@@ -8,8 +8,8 @@ services:
         VER: ${IRCD_VERSION}
     image: rssnet/unrealircd:${IRCD_VERSION}
     volumes:
-      - "./ircd/conf/unrealircd.conf:/srv/unrealircd/conf/unrealircd.conf:ro"
-      - "./ircd/conf/tls:/srv/unrealircd/conf/tls:ro"
+      - "./conf/unrealircd.conf:/srv/unrealircd/conf/unrealircd.conf:ro"
+      - "./conf/tls:/srv/unrealircd/conf/tls:ro"
       - "./data/ircd:/srv/unrealircd/data:rw"
     expose: 
       - "6697/tcp"
@@ -26,9 +26,7 @@ services:
         VER: ${SOPEL_VERSION}
     image: rssnet/sopel:${SOPEL_VERSION}
     volumes:
-      - "./data/sopel/default.cfg:/home/sopel/.sopel/default.cfg:rw"
-      - "./data/sopel/default.db:/home/sopel/.sopel/default.db:rw"
-      - "./data/sopel/plugins:/home/sopel/.sopel/plugins:ro"
+      - "./data/sopel:/home/sopel/.sopel"
     restart: always
     networks:
       - rssnet
