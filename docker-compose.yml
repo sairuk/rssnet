@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  unrealircd:
+    build: 
+      context: ircd
+      dockerfile: Dockerfile
+      args:
+        VER: ${IRCD_VERSION}
+    image: rssnet/unrealircd:${IRCD_VERSION}
+    volumes:
+      - "./ircd/conf/unrealircd.conf:/srv/unrealircd/conf/unrealircd.conf:ro"
+      - "./ircd/conf/tls:/srv/unrealircd/conf/tls:ro"
+      - "./data/ircd:/srv/unrealircd/data:rw"
+    expose: 
+      - "6697/tcp"
+    ports:
+      - 6697:6697
+    networks:
+      - rssnet
+    restart: always
+  sopel:
+    build:
+      context: sopel
+      dockerfile: Dockerfile
+      args:
+        VER: ${SOPEL_VERSION}
+    image: rssnet/sopel:${SOPEL_VERSION}
+    volumes:
+      - "./data/sopel/default.cfg:/home/sopel/.sopel/default.cfg:rw"
+      - "./data/sopel/default.db:/home/sopel/.sopel/default.db:rw"
+      - "./data/sopel/plugins:/home/sopel/.sopel/plugins:ro"
+    restart: always
+    networks:
+      - rssnet
+networks:
+  rssnet:

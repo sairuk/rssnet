@@ -1,0 +1,3 @@
+data/*
+ircd/conf/*
+ircd/conf/tls/*
