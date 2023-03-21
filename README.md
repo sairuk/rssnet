@@ -17,9 +17,8 @@ create `/data/ircd` and `/data/sopel` for your data
 * in your default config set `host = unrealircd`
 
 ## running
-first time out: `docker-compose build`
-
-every other bit of magic: `docker-compose up` 
+* first time out: `docker-compose build`
+* every other bit of magic: `docker-compose up` 
 
 ## usage
 1. connect to the ircd on port `6697`
